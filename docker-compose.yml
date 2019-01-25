@@ -55,11 +55,21 @@ services:
       - "secrets:/run/secrets"
       - "/dev/null:/run/secrets/keys/code_sign_private"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    expose:
+      - "80"
     ports: 
-      - "80:80"
+    #  - "80:80"
       - "5000:5000"
       - "5050-5100:5050-5100"
     tty: true
     environment:
       - URL_BASE
       - PROJECT
+    
+  nginx:
+    image: nginx:mainline-alpine
+    ports:
+        - "129.114.99.213:443:443"
+    volumes:
+    - ./config/nginx.conf:/etc/nginx/nginx.conf
+    - ./certs/*:/etc/ssl/
